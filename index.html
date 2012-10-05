@@ -1,0 +1,158 @@
+<html>
+<head>
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+#wrapper {
+  position: relative;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+div.pane {
+  position: relative;
+  width: 100%;
+  height: 100px;
+  line-height: 100px;
+  font-size: 100px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  /** -webkit-transition: height linear 500ms */
+}
+
+div.pane.open div.pane-body {
+  display: block;
+  overflow: auto;
+}
+
+div.pane.anim div.pane-body {
+  display: block;
+  overflow: hidden;
+}
+
+div.pane-body {
+  display: none;
+  position: absolute;
+  top: 100px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-top: 1px solid black;
+  background: white;
+  color: blue;
+}
+
+</style>
+
+<script src="vendor/jquery.js" type="text/javascript" charset="utf-8"></script>
+<script src="vendor/jquery.animate-enhanced.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<div id='wrapper'>
+  <div class='pane'>
+    <div class='pane-header'>A</div>
+    <div class='pane-body'></div>
+  </div>
+  <div class='pane'>
+    <div class='pane-header'>B</div>
+    <div class='pane-body'></div>
+  </div>
+  <div class='pane'>
+    <div class='pane-header'>C</div>
+    <div class='pane-body'></div>
+  </div>
+  <div class='pane'>
+    <div class='pane-header'>D</div>
+    <div class='pane-body'></div>
+  </div>
+  <div class='pane'>
+    <div class='pane-header'>E</div>
+    <div class='pane-body'></div>
+  </div>
+  <div class='pane'>
+    <div class='pane-header'>F</div>
+    <div class='pane-body'></div>
+  </div>
+  <div class='pane'>
+    <div class='pane-header'>G</div>
+    <div class='pane-body'></div>
+  </div>
+</div>
+<script>
+
+/**
+ * add Random colors
+ * http://paulirish.com/2009/random-hex-color-code-snippets/
+ */
+
+$('.pane').each(function () {
+  $(this).css('background', '#'+Math.floor(Math.random()*16777215).toString(16));
+});
+
+/**
+ * add body contents
+ */
+
+$('.pane-body').each(function () {
+  var child = '';
+  for (var i = 0; i < 50; i++) {
+    child += '<h3>hoge' + i + '</h3>';
+  }
+  child += '';
+  $(this).html(child);
+});
+
+/**
+ * Expand pane
+ */
+
+$('body').on('click', '.pane:not(.open, .anim)', function (e) {
+  var $target = $(e.currentTarget)
+    , h = $(window).innerHeight()
+    , top = $target.offset().top
+    , done;
+
+  $target
+    .toggleClass('open')
+    .addClass('anim');
+
+  $target.animate({ height: '100%' });
+  // cross browser scroll
+  $('html, body').animate({ scrollTop: top }, function () {
+    if (done) return;
+    done = true;
+    $target.siblings().hide();
+    $target.removeClass('anim');
+  });
+});
+
+/**
+ * Close pane
+ */
+
+$('body').on('click', '.pane.open:not(.anim) .pane-header', function (e) {
+  var $header = $(e.currentTarget)
+    , $target = $header.parent('.pane');
+
+  $target
+    .toggleClass('open')
+    .addClass('anim');
+
+  $target.animate({ height: 100 }, function () {
+    $target.css('height', '');
+    $target.removeClass('anim');
+  })
+
+  $target.siblings().show();
+
+  var top = Math.ceil($target.offset().top);
+  $(window).scrollTop(top);
+});
+</script>
+</body>
+</html>
