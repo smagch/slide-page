@@ -1,0 +1,108 @@
+<html>
+<head>
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+#wrapper {
+  position: relative;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+div.slide-page {
+  height: 40px;
+  line-height: 40px;
+  font-size: 40px;
+}
+
+div.page-body {
+  border-top: 1px solid black;
+  color: blue;
+}
+
+.slide-page .slide-open {
+  display: inline;
+}
+
+.slide-page .slide-close {
+  display: none;
+}
+
+.slide-page.open .slide-open {
+  display: none;
+}
+
+.slide-page.open .slide-close {
+  display: inline;
+}
+
+</style>
+<link rel='stylesheet' type='text/css' href='../css/slide-page.css'></link>
+<script src="../vendor/jquery.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery.slide-page.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<div id='wrapper'>
+  <div class='slide-page'>
+    <div class='page-header'>
+      <span style='display: inline;'>A</span>
+      <a href='#' class='slide-open'>open</a>
+      <a href='#' class='slide-close'>close</a>
+    </div>
+    <div class='page-body'></div>
+  </div>
+  <div class='slide-page'>
+    <div class='page-header'>B</div>
+    <div class='page-body'></div>
+  </div>
+  <div class='slide-page'>
+    <div class='page-header'>None</div>
+    <div class='page-body'></div>
+  </div>
+  <div class='slide-page'>
+    <div class='page-header'>C</div>
+    <div class='page-body'></div>
+  </div>
+  <div class='slide-page'>
+    <div class='page-header'>D</div>
+    <div class='page-body'></div>
+  </div>
+  <div class='slide-page'>
+    <div class='page-header'>E</div>
+    <div class='page-body'></div>
+  </div>
+</div>
+
+<script>
+(function () {
+
+  /**
+   * add Random colors
+   * http://paulirish.com/2009/random-hex-color-code-snippets/
+   */
+
+  $('.slide-page').each(function () {
+    $(this).css('background', '#'+Math.floor(Math.random()*16777215).toString(16));
+  });
+
+  /**
+   * add body contents
+   */
+
+  $('.page-body').each(function () {
+    var child = '';
+    for (var i = 0; i < 50; i++) {
+      child += '<h3>hoge' + i + '</h3>';
+    }
+    child += '';
+    $(this).html(child);
+  });
+
+})();
+</script>
+</body>
+</html>

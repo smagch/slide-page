@@ -1,0 +1,25 @@
+div.slide-page {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+div.slide-page.open div.page-body {
+  display: block;
+  overflow: auto;
+}
+
+div.slide-page.anim div.page-body {
+  display: block;
+  overflow: hidden;
+}
+
+div.page-body {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
